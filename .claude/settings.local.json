@@ -4,9 +4,49 @@
       "Bash(.specify/scripts/bash/create-phr.sh:*)",
       "Bash(powershell:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(powershell.exe:*)",
+      "Bash(__NEW_LINE__ .specify/scripts/bash/create-phr.sh --title \"Failed to implement due to missing feature directory\" --stage general --json)",
+      "Bash(__NEW_LINE__ .specify/scripts/bash/create-phr.sh --title \"Failed to implement due to incorrect script parameter\" --stage general --json)",
+      "Bash($env:SPECIFY_FEATURE=\"the-robotic-nervous-system-ros2\")",
+      "Bash(__NEW_LINE__ .specify/scripts/bash/create-phr.sh --title \"Failed to implement due to missing plan.md\" --stage general --json)",
+      "Bash($env:SPECIFY_FEATURE=\"physical-ai-humanoid-robotics-book\")",
+      "Bash(SPECIFY_FEATURE=\"physical-ai-humanoid-robotics-book\" powershell.exe:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(.specify/scripts/powershell/check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks)",
+      "WebSearch",
+      "Bash(npx create-docusaurus@latest website classic)",
+      "Bash(npm install @docusaurus/core@latest @docusaurus/preset-classic@latest)",
+      "Bash(npm install --save @docusaurus/core@latest @docusaurus/preset-classic@latest)",
+      "Bash(npm run start)",
+      "Bash(npx docusaurus start --port 3001)",
+      "SlashCommand(/sp.phr \"Implement Phase 4 tasks for Module 2 Digital Twin\" --stage red)",
+      "Bash(git config user.name)",
+      "SlashCommand(/sp.phr \"Implement Phase 5 tasks for Module 3 Isaac Sim\" --stage red)"
     ],
     "deny": [],
     "ask": []
+  },
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@context7/mcp-server"
+      ]
+    },
+    "github": {
+      "httpUrl": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer $GITHUB_MCP_PATH"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/stdio-playwright"
+      ]
+    }
   }
 }
