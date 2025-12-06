@@ -1,0 +1,10 @@
+# Goal: Natural language command for the robot
+string command
+---
+# Result: Execution status
+bool success
+string message
+---
+# Feedback: Execution progress
+string current_action
+float64 progress

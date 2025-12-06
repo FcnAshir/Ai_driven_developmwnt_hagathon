@@ -20,10 +20,7 @@ By the end of this module, you will be able to:
 ## Table of Contents
 
 1. [VLA Concepts](./vla-research.md) - Fundamental concepts and architecture
-2. [Speech Recognition](./speech) - Voice command processing
-3. [Language Understanding](./language) - Natural language processing for robotics
-4. [Vision Integration](./vision) - Visual perception and scene understanding
-5. [VLA Labs](./labs) - Laboratory exercises for VLA systems
+2. [VLA Labs](./labs/lab1.md) - Laboratory exercises for VLA systems
 
 ## Introduction
 

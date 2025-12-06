@@ -145,20 +145,20 @@
 
 ### Implementation for Module 4
 
--   [ ] T061 [P] [US1] Draft Module 4: Introduction to VLA. docs/module-4-vla/index.md
--   [ ] T062 [P] [US1] Draft Module 4: Voice Recognition Pipeline (Whisper). docs/module-4-vla/index.md
--   [ ] T063 [P] [US1] Draft Module 4: Natural Language → Robot Planning. docs/module-4-vla/index.md
--   [ ] T064 [P] [US1] Draft Module 4: Vision for Object Recognition. docs/module-4-vla/index.md
--   [ ] T065 [P] [US2] Draft Module 4: Action Execution using ROS 2. docs/module-4-vla/index.md
--   [ ] T066 [P] [US2] Draft Module 4: Full VLA Pipeline Architecture. docs/module-4-vla/index.md
--   [ ] T067 [P] [US2] Implement Lab 1: Whisper installation + voice command, code in `src/vla_agents/lab1/`. Docs: `docs/module-4-vla/labs/lab1.md`
--   [ ] T068 [P] [US3] Implement Lab 2: Use LLM to convert text → ROS action plan, code in `src/vla_agents/lab2/`. Docs: `docs/module-4-vla/labs/lab2.md`
--   [ ] T069 [P] [US4] Implement Lab 3: Detect objects using YOLO/Isaac ROS, code in `src/vla_agents/lab3/`. Docs: `docs/module-4-vla/labs/lab3.md`
--   [ ] T070 [P] [US5] Implement Lab 4: Robot picks an object after verbal instruction, code in `src/vla_agents/lab4/`. Docs: `docs/module-4-vla/labs/lab4.md`
--   [ ] T071 [P] [US5] Implement Lab 5: Build final VLA project: “Clean the room” pipeline, code in `src/vla_agents/lab5/`. Docs: `docs/module-4-vla/labs/lab5.md`
--   [ ] T072 [P] [US5] Draft Module 4: VLA Troubleshooting. docs/module-4-vla/index.md
--   [ ] T073 [P] [US5] Draft Module 4: VLA Summary. docs/module-4-vla/index.md
--   [ ] T074 [P] [US5] Draft Module 4: VLA Further Reading. docs/module-4-vla/index.md
+-   [X] T061 [P] [US1] Draft Module 4: Introduction to VLA. docs/module-4-vla/index.md
+-   [X] T062 [P] [US1] Draft Module 4: Voice Recognition Pipeline (Whisper). docs/module-4-vla/index.md
+-   [X] T063 [P] [US1] Draft Module 4: Natural Language → Robot Planning. docs/module-4-vla/index.md
+-   [X] T064 [P] [US1] Draft Module 4: Vision for Object Recognition. docs/module-4-vla/index.md
+-   [X] T065 [P] [US2] Draft Module 4: Action Execution using ROS 2. docs/module-4-vla/index.md
+-   [X] T066 [P] [US2] Draft Module 4: Full VLA Pipeline Architecture. docs/module-4-vla/index.md
+-   [X] T067 [P] [US2] Implement Lab 1: Whisper installation + voice command, code in `src/vla_agents/lab1/`. Docs: `docs/module-4-vla/labs/lab1.md`
+-   [X] T068 [P] [US3] Implement Lab 2: Use LLM to convert text → ROS action plan, code in `src/vla_agents/lab2/`. Docs: `docs/module-4-vla/labs/lab2.md`
+-   [X] T069 [P] [US4] Implement Lab 3: Detect objects using YOLO/Isaac ROS, code in `src/vla_agents/lab3/`. Docs: `docs/module-4-vla/labs/lab3.md`
+-   [X] T070 [P] [US5] Implement Lab 4: Robot picks an object after verbal instruction, code in `src/vla_agents/lab4/`. Docs: `docs/module-4-vla/labs/lab4.md`
+-   [X] T071 [P] [US5] Implement Lab 5: Build final VLA project: “Clean the room” pipeline, code in `src/vla_agents/lab5/`. Docs: `docs/module-4-vla/labs/lab5.md`
+-   [X] T072 [P] [US5] Draft Module 4: VLA Troubleshooting. docs/module-4-vla/index.md
+-   [X] T073 [P] [US5] Draft Module 4: VLA Summary. docs/module-4-vla/index.md
+-   [X] T074 [P] [US5] Draft Module 4: VLA Further Reading. docs/module-4-vla/index.md
 
 **Checkpoint**: Module 4 content is complete, functional, and testable independently.
 
@@ -168,8 +168,8 @@
 
 **Purpose**: Integrating all modules, ensuring cross-book consistency, final validation, and preparing for deployment.
 
--   [ ] T075 Draft Capstone Project Specification for `docs/capstone-project.md`.
--   [ ] T076 Integrate all module labs into coherent Hands-On Tutorials for `docs/lab-guides.md`.
+-   [X] T075 Draft Capstone Project Specification for `docs/capstone-project.md`.
+-   [X] T076 Integrate all module labs into coherent Hands-On Tutorials for `docs/lab-guides.md`.
 -   [ ] T077 Ensure cross-module consistency (terminology, examples, style) across `docs/`.
 -   [ ] T078 Validate all code and simulation steps across all modules for correctness and reproducibility in `src/`.
 -   [ ] T079 Finalize Global Sections (Preface, Overview, Weekly Breakdown, Hardware Appendix, Glossary, Sim-to-Real) in `docs/`.

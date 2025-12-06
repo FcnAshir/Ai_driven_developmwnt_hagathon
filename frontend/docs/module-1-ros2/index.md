@@ -28,11 +28,11 @@ By the end of this module, you will be able to:
 
 1. [ROS 2 Core Concepts](#core-concepts) - Fundamental concepts and architecture
 2. [ROS 2 Architecture + Diagrams](#architecture) - Deep dive into the system architecture
-3. [ROS 2 Deep Technical Foundation](#technical-foundation) - Advanced concepts including DDS and lifecycle management
+3. [ROS 2 Deep Technical Foundation](#deep-technical-foundation) - Advanced concepts including DDS and lifecycle management
 4. [ROS 2 Practical Tutorials](#practical-tutorials) - Hands-on exercises
-5. [ROS 2 Labs](./labs) - Laboratory exercises for humanoid robotics
-6. [ROS 2 Application to Humanoid Robotics](#humanoid-application) - Specific applications to humanoid systems
-7. [ROS 2 Debugging & Troubleshooting](#debugging) - Common issues and solutions
+5. [ROS 2 Labs](./labs/lab1.md) - Laboratory exercises for humanoid robotics
+6. [ROS 2 Application to Humanoid Robotics](#ros-2-application-to-humanoid-robotics) - Specific applications to humanoid systems
+7. [ROS 2 Debugging & Troubleshooting](#debugging--troubleshooting) - Common issues and solutions
 
 ## Introduction
 
