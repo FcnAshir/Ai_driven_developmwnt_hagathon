@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build)",
+      "Bash(npm run build -- --verbose)",
+      "Bash(git add docs/docusaurus.config.js)",
+      "Bash(git add docusaurus.config.js)",
+      "Bash(git commit -m \"Configure Docusaurus for GitHub Pages deployment\n\n- Updated baseUrl to match repository name ''Ai_driven_developmwnt_hagathon''\n- Updated projectName to match actual repository name\n- Updated editUrl and GitHub links to point to correct repository\")",
+      "Bash(git push origin main)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
