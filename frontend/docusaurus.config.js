@@ -11,15 +11,15 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-username.github.io',
+  url: 'https://FcnAshir.github.io', // Replace with your GitHub username
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/physical-ai-humanoid-robotics-book/docs/docs/intro/',
+  baseUrl: '/physical-ai-humanoid-robotics-book/',
   trailingSlash: true,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'your-username', // Usually your GitHub org/user name.
+  organizationName: 'FcnAshir', // Usually your GitHub org/user name.
   projectName: 'physical-ai-humanoid-robotics-book', // Usually your repo name.
 
   onBrokenLinks: 'throw',
@@ -50,7 +50,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/your-username/physical-ai-humanoid-robotics-book/tree/main/',
+            'https://github.com/FcnAshir/physical-ai-humanoid-robotics-book/tree/main/',
         },
         blog: false, // Optional: disable the blog plugin
         theme: {
@@ -79,7 +79,7 @@ const config = {
             label: 'Book',
           },
           {
-            href: 'https://github.com/your-username/physical-ai-humanoid-robotics-book',
+            href: 'https://github.com/FcnAshir/physical-ai-humanoid-robotics-book',
             label: 'GitHub',
             position: 'right',
           },
@@ -115,7 +115,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/your-username/physical-ai-humanoid-robotics-book',
+                href: 'https://github.com/FcnAshir/physical-ai-humanoid-robotics-book',
               },
             ],
           },
