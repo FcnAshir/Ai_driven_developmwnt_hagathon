@@ -14,13 +14,13 @@ const config = {
   url: 'https://FcnAshir.github.io', // Replace with your GitHub username
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/physical-ai-humanoid-robotics-book/',
+  baseUrl: '/Ai_driven_developmwnt_hagathon/',
   trailingSlash: true,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'FcnAshir', // Usually your GitHub org/user name.
-  projectName: 'physical-ai-humanoid-robotics-book', // Usually your repo name.
+  projectName: 'Ai_driven_developmwnt_hagathon', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   markdown: {
@@ -50,7 +50,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/FcnAshir/physical-ai-humanoid-robotics-book/tree/main/',
+            'https://github.com/FcnAshir/Ai_driven_developmwnt_hagathon/tree/main/',
         },
         blog: false, // Optional: disable the blog plugin
         theme: {
@@ -79,7 +79,7 @@ const config = {
             label: 'Book',
           },
           {
-            href: 'https://github.com/FcnAshir/physical-ai-humanoid-robotics-book',
+            href: 'https://github.com/FcnAshir/Ai_driven_developmwnt_hagathon',
             label: 'GitHub',
             position: 'right',
           },
@@ -115,7 +115,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/FcnAshir/physical-ai-humanoid-robotics-book',
+                href: 'https://github.com/FcnAshir/Ai_driven_developmwnt_hagathon',
               },
             ],
           },
