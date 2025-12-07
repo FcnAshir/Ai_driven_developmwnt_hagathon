@@ -14,7 +14,7 @@ COLLECTION_NAME = "humanoid_ai_book"
 
 cohere_client = cohere.Client("HsGP14wEFXb8ugp8XL3Rs5Loz33n8hxw279RqflZ")
 EMBED_MODEL = "embed-english-v3.0"
-~##
+
 
 # Connect to Qdrant Cloud
 qdrant = QdrantClient(

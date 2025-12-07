@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p docs)",
+      "Bash(mkdir -p docs/src/pages docs/src/components docs/src/css)",
+      "Bash(tree docs)",
+      "Bash(dir docs /s)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
