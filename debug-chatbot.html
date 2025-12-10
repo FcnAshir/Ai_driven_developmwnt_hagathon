@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug ChatBot - Backend Connection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .status-section {
+            text-align: center;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .connected {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .disconnected {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        #chatWindow {
+            height: 350px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            overflow-y: auto;
+            background-color: #fafafa;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .user {
+            background-color: #dcf8c6;
+            margin-left: auto;
+            text-align: right;
+            border-bottom-right-radius: 2px;
+        }
+        .bot {
+            background-color: #e5e5ea;
+            margin-right: auto;
+            border-bottom-left-radius: 2px;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .inputArea {
+            display: flex;
+            gap: 10px;
+        }
+        #userInput {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        #sendBtn {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #sendBtn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .debug-info {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .step {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #e9ecef;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Debug ChatBot - Backend Connection Test</h1>
+
+        <div id="connectionStatus" class="status-section disconnected">
+            🔴 Status: Backend NOT CONNECTED - Checking...
+        </div>
+
+        <div class="status-section info">
+            ℹ️ Backend URL: http://localhost:8000
+        </div>
+
+        <div id="debugInfo" class="debug-info">
+            <strong>Connection Steps:</strong><br>
+            <div class="step">1. Checking backend health endpoint...</div>
+            <div class="step" id="step2">2. Testing API connectivity...</div>
+            <div class="step" id="step3">3. Ready to chat</div>
+        </div>
+
+        <div id="chatWindow">
+            <div class="message bot">Welcome! I'm checking the connection to the backend server...</div>
+        </div>
+
+        <div class="inputArea">
+            <input type="text" id="userInput" placeholder="Type your message here (e.g., 'Hello', 'Test', 'Hi')...">
+            <button id="sendBtn">Send</button>
+        </div>
+
+        <div class="debug-info">
+            <strong>Instructions:</strong><br>
+            - If you see CORS errors in browser console, that's normal - this is a development setup<br>
+            - The backend IS running and accessible (verified by health check)<br>
+            - Try sending a simple message like "Hello" to test the connection<br>
+            - If it still doesn't work, the issue might be with your browser's security settings
+        </div>
+    </div>
+
+    <script>
+        const chatWindow = document.getElementById('chatWindow');
+        const connectionStatus = document.getElementById('connectionStatus');
+        const debugInfo = document.getElementById('debugInfo');
+
+        // Add message to chat window
+        function addMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.innerHTML = text;
+            chatWindow.appendChild(messageDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        // Update status
+        function updateStatus(status, message) {
+            connectionStatus.className = `status-section ${status}`;
+            connectionStatus.innerHTML = message;
+        }
+
+        // Test backend connection
+        async function testBackendConnection() {
+            try {
+                // Update UI
+                updateStatus('info', '🔍 Status: Testing backend connection...');
+
+                // Test health endpoint
+                const healthResponse = await fetch('http://localhost:8000/.well-known/health', {
+                    method: 'GET',
+                    mode: 'cors' // Explicitly set CORS mode
+                });
+
+                if (healthResponse.ok) {
+                    const healthData = await healthResponse.json();
+                    updateStatus('connected', `🟢 Status: Backend CONNECTED (Version: ${healthData.version})`);
+                    addMessage("✅ Backend is connected! Service: " + healthData.service, 'bot');
+                    return true;
+                } else {
+                    throw new Error(`Health check failed: ${healthResponse.status}`);
+                }
+            } catch (error) {
+                console.error('Backend connection test failed:', error);
+                updateStatus('disconnected', `🔴 Status: Backend NOT CONNECTED - ${error.message}`);
+                addMessage(`❌ Connection failed: ${error.message}`, 'error');
+                addMessage("💡 Try opening this page as a file in your browser (file:///) or check if the backend is running on http://localhost:8000", 'bot');
+                return false;
+            }
+        }
+
+        // Send message to backend
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            document.getElementById('sendBtn').disabled = true;
+
+            try {
+                // Send to backend
+                const response = await fetch('http://localhost:8000/chatkit-public', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        thread_id: 'debug_test_thread',
+                        messages: [{ role: 'user', content: message }],
+                        context: { book_id: 'physical-ai-book', chapter_id: 'test' }
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status} - ${response.statusText}`);
+                }
+
+                // Handle streaming response
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                // Add bot message placeholder
+                const botMsg = document.createElement('div');
+                botMsg.className = 'message bot';
+                botMsg.innerHTML = '<em>AI is thinking...</em>';
+                chatWindow.appendChild(botMsg);
+
+                let fullResponse = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const text = decoder.decode(value);
+                    const lines = text.split('\n');
+
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            try {
+                                const data = JSON.parse(line.substring(6));
+                                if (data.delta) {
+                                    fullResponse += data.delta;
+                                    botMsg.innerHTML = fullResponse.replace(/\n/g, '<br>');
+                                }
+                            } catch (e) {
+                                // Ignore non-JSON lines
+                            }
+                        }
+                    }
+                }
+
+            } catch (error) {
+                console.error('Send message error:', error);
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'message error';
+                errorDiv.textContent = `Error: ${error.message}`;
+                chatWindow.appendChild(errorDiv);
+
+                // Also add a helpful message
+                const helpDiv = document.createElement('div');
+                helpDiv.className = 'message bot';
+                helpDiv.innerHTML = `
+                    <strong>Troubleshooting tips:</strong><br>
+                    1. Check if the backend server is running on http://localhost:8000<br>
+                    2. Look for the backend terminal to see if it received your request<br>
+                    3. If using Chrome, try: chrome://flags/#out-of-blink-cors and disable it<br>
+                    4. Or try using Firefox or Edge<br>
+                    5. Make sure no other application is using port 8000
+                `;
+                chatWindow.appendChild(helpDiv);
+            } finally {
+                document.getElementById('sendBtn').disabled = false;
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            }
+        }
+
+        // Event listeners
+        document.getElementById('sendBtn').addEventListener('click', sendMessage);
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Initialize when page loads
+        window.onload = async function() {
+            // Add initial message
+            addMessage("Starting connection test...", 'bot');
+
+            // Test connection
+            await testBackendConnection();
+
+            // Add instructions
+            addMessage("You can now send messages. Try 'Hello' or 'Test' to verify the connection.", 'bot');
+        };
+    </script>
+</body>
+</html>

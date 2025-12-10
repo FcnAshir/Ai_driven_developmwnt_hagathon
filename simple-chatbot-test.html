@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple ChatBot Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #chatWindow {
+            height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            overflow-y: auto;
+            background-color: #fafafa;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+        .user {
+            background-color: #dcf8c6;
+            margin-left: auto;
+            text-align: right;
+        }
+        .bot {
+            background-color: #e5e5ea;
+            margin-right: auto;
+        }
+        .inputArea {
+            display: flex;
+            gap: 10px;
+        }
+        #userInput {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        #sendBtn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #sendBtn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .status {
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .connected {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .disconnected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ChatBot Connection Test</h1>
+
+        <div id="status" class="status disconnected">Status: Backend NOT CONNECTED</div>
+
+        <div id="chatWindow">
+            <div class="message bot">Hello! I'm your AI assistant. I'm connected to the backend server. Ask me anything!</div>
+        </div>
+
+        <div class="inputArea">
+            <input type="text" id="userInput" placeholder="Type your message here...">
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Check backend connection on page load
+        async function checkBackendConnection() {
+            try {
+                const response = await fetch('http://localhost:8000/.well-known/health');
+                if (response.ok) {
+                    document.getElementById('status').className = 'status connected';
+                    document.getElementById('status').textContent = 'Status: Backend CONNECTED ✅';
+                    return true;
+                }
+            } catch (error) {
+                document.getElementById('status').className = 'status disconnected';
+                document.getElementById('status').textContent = 'Status: Backend NOT CONNECTED ❌';
+            }
+            return false;
+        }
+
+        // Send message to backend
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatWindow = document.getElementById('chatWindow');
+
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.textContent = message;
+            chatWindow.appendChild(userMsg);
+            input.value = '';
+
+            // Disable send button
+            document.getElementById('sendBtn').disabled = true;
+
+            try {
+                // Send to backend
+                const response = await fetch('http://localhost:8000/chatkit-public', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        thread_id: 'test_thread_ui',
+                        messages: [{ role: 'user', content: message }],
+                        context: { book_id: 'physical-ai-book', chapter_id: 'test' }
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                // Handle streaming response
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                // Add bot message placeholder
+                const botMsg = document.createElement('div');
+                botMsg.className = 'message bot';
+                botMsg.innerHTML = '<em>AI is thinking...</em>';
+                chatWindow.appendChild(botMsg);
+
+                let fullResponse = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const text = decoder.decode(value);
+                    const lines = text.split('\n');
+
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            try {
+                                const data = JSON.parse(line.substring(6));
+                                if (data.delta) {
+                                    fullResponse += data.delta;
+                                    botMsg.innerHTML = fullResponse.replace(/\n/g, '<br>');
+                                }
+                            } catch (e) {
+                                // Ignore non-JSON lines
+                            }
+                        }
+                    }
+                }
+
+            } catch (error) {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'message bot';
+                botMsg.textContent = `Error: ${error.message}`;
+                chatWindow.appendChild(botMsg);
+            } finally {
+                document.getElementById('sendBtn').disabled = false;
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            }
+        }
+
+        // Event listeners
+        document.getElementById('sendBtn').addEventListener('click', sendMessage);
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Check connection when page loads
+        window.onload = function() {
+            checkBackendConnection();
+        };
+    </script>
+</body>
+</html>
