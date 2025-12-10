@@ -9,7 +9,7 @@ import cohere
 # CONFIG
 # -------------------------------------
 # Your Deployment Link:
-SITEMAP_URL = "https://physicalhumanoidaitextbook.vercel.app/sitemap.xml"
+SITEMAP_URL = "https://ai-driven-developmwnt-hagathon-pv3d.vercel.app/sitemap.xml"
 COLLECTION_NAME = "humanoid_ai_book"
 
 cohere_client = cohere.Client("HsGP14wEFXb8ugp8XL3Rs5Loz33n8hxw279RqflZ")

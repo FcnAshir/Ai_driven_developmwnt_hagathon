@@ -1,0 +1,150 @@
+# OpenAPI Specification: ChatKit + Gemini + RAG API
+
+## Overview
+This document specifies the API contracts for the ChatKit integration with RAG and Gemini LLM backend. The API follows the ChatKit protocol for seamless integration with the frontend widget.
+
+## Base Path
+All endpoints are relative to the base URL of the deployed service.
+
+## Authentication
+JWT tokens from book frontend, validated at request time.
+
+## Endpoints
+
+### POST /chatkit
+**Description**: ChatKit protocol entrypoint that handles user messages and returns streaming responses.
+
+**Request Body**:
+```json
+{
+  "thread_id": "string",
+  "messages": [
+    {
+      "role": "user",
+      "content": "string"
+    }
+  ],
+  "context": {
+    "book_id": "string",
+    "chapter_id": "string"
+  }
+}
+```
+
+**Response**: Streaming Server-Sent Events (SSE) with events:
+- `message_chunk`: Contains partial response text
+- `message`: Complete message when finished
+- `error`: Error information if processing fails
+
+**Example Response Stream**:
+```
+event: message_chunk
+data: {"delta": "Hello"}
+
+event: message_chunk
+data: {"delta": " world"}
+
+event: message
+data: {"content": "Hello world", "role": "assistant"}
+```
+
+### GET /.well-known/health
+**Description**: Health check endpoint.
+
+**Response**:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2025-12-10T10:00:00Z"
+}
+```
+
+### POST /actions
+**Description**: Optional endpoint for handling custom actions from the ChatKit widget.
+
+**Request Body**:
+```json
+{
+  "action": "search|recommend|navigate_section",
+  "payload": {
+    "query": "string",
+    "topic": "string",
+    "section_id": "string"
+  },
+  "thread_id": "string"
+}
+```
+
+**Response**:
+```json
+{
+  "results": [
+    {
+      "title": "string",
+      "snippet": "string"
+    }
+  ]
+}
+```
+
+## Data Models
+
+### Thread Metadata
+```json
+{
+  "thread_id": "uuid",
+  "user_id": "string",
+  "book_id": "string",
+  "chapter_id": "string",
+  "last_response_run_id": "string",
+  "labels": ["string"]
+}
+```
+
+### Message
+```json
+{
+  "id": "uuid",
+  "type": "user|assistant|tool|system",
+  "content": [
+    {
+      "type": "text",
+      "text": "..."
+    }
+  ],
+  "created_at": "iso8601",
+  "metadata": {}
+}
+```
+
+### RAG Response Contract
+```json
+{
+  "query": "...",
+  "top_k": 5,
+  "results": [
+    {
+      "id": "doc1",
+      "score": 0.98,
+      "source": "book:chapter1",
+      "text": "...",
+      "cursor": 123
+    }
+  ],
+  "assembled_context": "long string used for prompt",
+  "retrieval_meta": {
+    "method": "qdrant",
+    "params": {}
+  }
+}
+```
+
+## Error Handling
+- 401: Unauthorized (invalid JWT)
+- 429: Rate Limited (per-user rate limit exceeded)
+- 500: Internal Server Error (LLM or RAG service unavailable)
+- 503: Service Unavailable (temporary overload)
+
+## Rate Limiting
+- Per-user rate limiting enforced
+- Concurrent LLM calls limited per server instance
